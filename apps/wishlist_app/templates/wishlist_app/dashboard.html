@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>My Wish List</title>
+    </head>
+    <body>
+        <h2>Hello {{request.session.name}}!</h2>
+        <span><a href="/logout/">Logout</a></span>
+        <p>Your Wish List</p>
+        <table>
+            <tr>
+                <th>Item: </th>
+                <th>Added by: </th>
+                <th>Date Added: </th>
+                <th>Action: </th>
+            </tr>
+            {% for item in my_items %}
+            <tr>
+                <td>{{item.name}}</td>
+                <td>{{user_item.name}}</td>
+                <td>{{item.created_at}}</td>
+                <td></td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br>
+        <p>Other User's Wish List</p>
+        <table>
+            <tr>
+                <th>Item: </th>
+                <th>Added by: </th>
+                <th>Date Added: </th>
+                <th>Action: </th>
+            </tr>
+            {% for item in all_items %}
+            <tr>
+                <td>Item: {{item.name}}</th>
+                <td>Added by: {{wishlist.user}}</th>
+                <td>Date Added: {{wishlist.created_at}}</th>
+                <td>Action: </th>
+            </tr>
+            {% endfor %}
+        </table>
+        <p><a href="/wish_items/add">Add Item</a></p>
+    </body>
+</html>

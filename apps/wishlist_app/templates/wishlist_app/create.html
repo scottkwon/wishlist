@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Create Item</title>
+        <style media="screen">
+            .error{
+                color:red;
+            }
+            .success{
+                color:green;
+            }
+        </style>
+    </head>
+    <body>
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+        <h2>Create a New Wish List Item</h2>
+        <span><a href="/dashboard/">Home</a></span>
+        <form class="" action="/wish_items/create/" method="post">
+            {% csrf_token %}
+            <label>
+                Item: <input type="text" name="item">
+            </label>
+            <span><input type="Submit"></span>
+        </form>
+    </body>
+</html>
