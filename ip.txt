@@ -1,2 +1,33 @@
 IPv4 Public IP
 54.153.35.178
+
+
+gunicorn --bind 0.0.0.0:8000 main.wsgi:application
+
+[Unit]
+Description=gunicorn daemon
+After=network.target
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/wishlist
+ExecStart=/home/ubuntu/wishlist/venv/bin/gunicorn --workers 3 --bind unix:/home/ubuntu/wishlist/main.sock main.wsgi:application
+[Install]
+WantedBy=multi-user.target
+
+sudo vim /etc/nginx/sites-available/wishlist
+
+server {
+  listen 80;
+  server_name 54.153.35.178;
+  location = /favicon.ico { access_log off; log_not_found off; }
+  location /static/ {
+      root /home/ubuntu/wishlist;
+  }
+  location / {
+      include proxy_params;
+      proxy_pass http://unix:/home/ubuntu/wishlist/main.sock;
+  }
+}
+
+sudo ln -s /etc/nginx/sites-available/main /etc/nginx/sites-enabled
